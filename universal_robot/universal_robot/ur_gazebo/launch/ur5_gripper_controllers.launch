@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch file parameters -->
+  <arg name="debug"     default="false" />
+
+  <arg if=      "$(arg debug)"  name="DEBUG" value="screen"/>
+  <arg unless = "$(arg debug)"  name="DEBUG" value="log"/>
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur_description)/urdf/ur5_robotiq85_gripper.urdf.xacro'" />
+
+  
+  <!-- we accumulate all the controllers in the one single main controllers config which controls the arm_controller as well as the gripper_controller  -->
+  <!-- Controllers config -->
+  <!-- <rosparam file="$(find ur_gazebo)/controller/ur5_gripper_controller.yaml" 
+            command="load" /> -->
+
+  <!-- Load controllers -->
+  <node name="robot_controllers" pkg="controller_manager" type="spawner"
+        output="$(arg DEBUG)"
+        args="gripper_controller"/>
+
+
+</launch>
