@@ -17,7 +17,7 @@ Finally the slave robot brings the object at the final position. The master and 
 
 - How to cite this repository: 
   ```
-    Khuzema Basuwala, M, Coordinating two UR5 robots for a pick and place with Robotiq85 Grippers, 
+    Khuzema Basuwala. M, Coordinating two UR5 robots for a pick and place with Robotiq85 Grippers, 
     (2020), GitHub repository, https://github.com/murtazabasu/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task.git
   
   ```
