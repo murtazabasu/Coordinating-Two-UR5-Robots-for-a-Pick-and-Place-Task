@@ -1,22 +1,5 @@
 #!/usr/bin/env python2
 
-"""
-    moveit_cartesian_path.py - Version 0.1 2016-07-28
-    Based on the R. Patrick Goebel's moveit_cartesian_demo.py demo code.
-    Plan and execute a Cartesian path for the end-effector.
-    Created for the Pi Robot Project: http://www.pirobot.org
-    Copyright (c) 2014 Patrick Goebel.  All rights reserved.
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.5
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details at:
-    http://www.gnu.org/licenses/gpl.html
-"""
-
 import rospy, sys, numpy as np
 import moveit_commander
 from copy import deepcopy
@@ -31,9 +14,10 @@ from std_msgs.msg import Header
 from trajectory_msgs.msg import JointTrajectory
 from trajectory_msgs.msg import JointTrajectoryPoint
 tracker = Tracker2_second()
-class ur5_vision_robot1:
+
+class ur5_vision_slave:
     def __init__(self):
-        rospy.init_node("ur5_vision_robot1", anonymous=False)
+        rospy.init_node("ur5_vision_slave", anonymous=False)
         self.track_flag = False
         self.default_pose_flag = True
         self.cx = 400.0
@@ -101,5 +85,5 @@ class ur5_vision_robot1:
         cv2.imshow("window", image )
         cv2.waitKey(1)
 
-follower=ur5_vision_robot1()
+follower=ur5_vision_slave()
 rospy.spin()

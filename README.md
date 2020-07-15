@@ -34,9 +34,9 @@ Finally the slave robot brings the object at the final position. The master and 
   $ git clone https://github.com/murtazabasu/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task.git
   ```
 Under the `catkin_ws3/src` there are three directories: 
- - `robotiq` for the robotiq85 gripper
- - `univesal_robot` for the ur5 robot models and moveit configuration files
- - `ur5_notebook` for the launch files and the python scripts
+ 1. `robotiq` for the robotiq85 gripper
+ 2. `univesal_robot` for the ur5 robot models and moveit configuration files
+ 3. `ur5_notebook` for the launch files and the python scripts
 
 - Build the code under directory `catkin_ws3/`,
   ```

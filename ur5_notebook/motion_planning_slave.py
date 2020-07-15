@@ -1,22 +1,5 @@
 #!/usr/bin/env python2
 
-"""
-    moveit_cartesian_path.py - Version 0.1 2016-07-28
-    Based on the R. Patrick Goebel's moveit_cartesian_demo.py demo code.
-    Plan and execute a Cartesian path for the end-effector.
-    Created for the Pi Robot Project: http://www.pirobot.org
-    Copyright (c) 2014 Patrick Goebel.  All rights reserved.
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.5
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details at:
-    http://www.gnu.org/licenses/gpl.html
-"""
-
 import rospy, sys, numpy as np
 import moveit_commander
 from copy import deepcopy
@@ -31,7 +14,7 @@ from trajectory_msgs.msg import JointTrajectoryPoint
 from time import sleep
 tracker = Tracker2_second()
 
-class ur5_mp:
+class ur5_mp_slave:
     def __init__(self):
         rospy.init_node("motion_planning_slave", anonymous=False)
         self.cxy_sub = rospy.Subscriber('slave/cxy', Tracker2_second, self.tracking_callback, queue_size=1)
@@ -302,19 +285,9 @@ class ur5_mp:
                 self.arm.set_start_state_to_current_state()
 
                 # Plan the Cartesian path connecting the waypoints
-
-                """moveit_commander.move_group.MoveGroupCommander.compute_cartesian_path(
-                        self, waypoints, eef_step, jump_threshold, avoid_collisios= True)
-                   Compute a sequence of waypoints that make the end-effector move in straight line segments that follow the
-                   poses specified as waypoints. Configurations are computed for every eef_step meters;
-                   The jump_threshold specifies the maximum distance in configuration space between consecutive points
-                   in the resultingpath. The return value is a tuple: a fraction of how much of the path was followed,
-                   the actual RobotTrajectory.
-                """
                 plan, fraction = self.arm.compute_cartesian_path(self.waypoints, 0.01, 0.0, True)
 
                 print("if statement for self.phase == 1")
-
 
                 # plan = self.arm.plan()
 
@@ -353,21 +326,12 @@ class ur5_mp:
             self.pointx.append(wpose.position.x)
             self.pointy.append(wpose.position.y)
             self.waypoints.append(deepcopy(wpose))
-            # Set the internal state to the current state
-            # self.arm.set_pose_target(wpose)
+
 
             self.arm.set_start_state_to_current_state()
 
             # Plan the Cartesian path connecting the waypoints
 
-            """moveit_commander.move_group.MoveGroupCommander.compute_cartesian_path(
-                    self, waypoints, eef_step, jump_threshold, avoid_collisios= True)
-               Compute a sequence of waypoints that make the end-effector move in straight line segments that follow the
-               poses specified as waypoints. Configurations are computed for every eef_step meters;
-               The jump_threshold specifies the maximum distance in configuration space between consecutive points
-               in the resultingpath. The return value is a tuple: a fraction of how much of the path was followed,
-               the actual RobotTrajectory.
-            """
             plan, fraction = self.arm.compute_cartesian_path(self.waypoints, 0.01, 0.0, True)
 
 
@@ -383,8 +347,6 @@ class ur5_mp:
             else:
                 rospy.loginfo("Path planning failed")
 
-        # print self.points
-
-mp=ur5_mp()
+mp=ur5_mp_slave()
 
 rospy.spin()
