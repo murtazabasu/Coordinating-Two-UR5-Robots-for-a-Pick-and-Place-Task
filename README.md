@@ -12,7 +12,7 @@ Finally the slave robot brings the object at the final position. The master and 
 3. Grasping action using the GripperActionController ([`send_gripper_master.py`](https://github.com/murtazabasu/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task/ur5_notebook/send_gripper_master.py)) and ([`send_gripper_slave.py`](https://github.com/murtazabasu/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task/ur5_notebook/send_gripper_slave.py))
 
 
-- Video demos:
+- Video demo:
   [`Simulation video on Youtube`](https://www.youtube.com/watch?v=n6Vk9lIxKkg)
 
 - How to cite this repository: 
@@ -23,7 +23,7 @@ Finally the slave robot brings the object at the final position. The master and 
   ```
 
 
-#### Criterion for using this repository
+#### Criterion for using this repository:
 - This project was tested on Ubuntu 18.04 with ROS Melodic.
 - Make sure you have installed Python2.7 and some useful libraries/packages, such as Numpy, cv2, etc.
 - Install ROS Melodic, Gazebo, universal robot, Moveit, RViz. 
