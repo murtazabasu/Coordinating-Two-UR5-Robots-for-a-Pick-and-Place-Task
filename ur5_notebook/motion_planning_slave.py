@@ -165,8 +165,6 @@ class ur5_mp_slave:
                 self.execute()
                 self.default_pose_flag = True
 
-
-
     def execute(self):
         if self.track_flag:
 
@@ -333,7 +331,6 @@ class ur5_mp_slave:
             # Plan the Cartesian path connecting the waypoints
 
             plan, fraction = self.arm.compute_cartesian_path(self.waypoints, 0.01, 0.0, True)
-
 
             # plan = self.arm.plan()
 

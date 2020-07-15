@@ -96,9 +96,6 @@ class ur5_mp_master:
 
         # self.arm.set_pose_target(wpose)
 
-
-
-
         # Specify default (idle) joint states
         self.default_joint_states = self.arm.get_current_joint_values()
         self.default_joint_states[1] = -1.5667
