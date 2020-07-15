@@ -21,18 +21,7 @@ Finally the slave robot brings the object at the final position. The master and 
     (2020), GitHub repository, https://github.com/MurtazaBasu-110/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task.git
   
   ```
-  or BibTex
-  
-  ```
-    @misc{Murtaza2020,
-      author = {Khuzema Basuwala, M},
-      title = {Coordinating two UR5 robots for a pick and place with Robotiq85 Grippers},
-      year = {2020},
-      publisher = {GitHub},
-      journal = {GitHub repository},
-      howpublished = {\url{https://github.com/MurtazaBasu-110/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task.git}}
-    }
-  ```
+
 
 #### Criterion for using this repository
 - This project was tested on Ubuntu 18.04 with ROS Melodic.

@@ -76,3 +76,5 @@
   <node name="gripper_command_master" pkg="ur5_notebook" type="send_gripper_master.py" output="screen" /> -->
 
 </launch>
+
+
