@@ -58,8 +58,8 @@ Under the `catkin_ws3/src` there are three directories:
   ```
   The motion planning and the gripper nodes for both the master and the slave can be initialized in the above launch file itself (uncomment the lines at the bottom) or each script can be made to run individually on seperate terminals.  
 
-#### 0. References
-- ([__`GitHub: lihuang3/ur5_ROS-Gazebo`__](https://github.com/lihuang3/ur5_ROS-Gazebo.git) Implementation of UR5 pick and place in ROS-Gazebo with a USB cam and vacuum grippers.
+#### References
+- [__`GitHub: lihuang3/ur5_ROS-Gazebo`__](https://github.com/lihuang3/ur5_ROS-Gazebo.git) Implementation of UR5 pick and place in ROS-Gazebo with a USB cam and vacuum grippers.
 - [__`ROS UR industrial`__](http://wiki.ros.org/universal_robot/Tutorials/Getting%20Started%20with%20a%20Universal%20Robot%20and%20ROS-Industrial)
 - [__`ROS modern driver`__](https://github.com/iron-ox/ur_modern_driver)
 - [__`ur_hardware_interface.cpp`__](https://github.com/iron-ox/ur_modern_driver/blob/883070d0b6c0c32b78bb1ca7155b8f3a1ead416c/src/ur_hardware_interface.cpp) 
