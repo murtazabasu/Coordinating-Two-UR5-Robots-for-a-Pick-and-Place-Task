@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="red_box_path" type="str" value="$(find ur5_notebook)/urdf/red_box.urdf"/>
+  <arg name="robot_name"/>
+  <!-- <arg name="init_pose"/> -->
+  <arg name="limited" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="debug" default="false" />
+  <arg name="sim" default="true" />
+
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <node name="bin" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/bin.urdf -urdf -model bin -y 0.75 -x -0.85 -z 0.05" />
+
+  <!-- spawn the conveyor_belt in gazebo -->
+  <node name="spawn_conveyor_belt" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/conveyor_belt.urdf -urdf -model table" />
+  <!-- spawn the conveyor_belt in gazebo -->
+
+  <!-- the red blocks spawner node -->
+
+  <node name="blocks_spawner" pkg="ur5_notebook" type="blocks_spawner" output="screen" />
+
+
+  <node name="blocks_poses_publisher" pkg="ur5_notebook" type="blocks_poses_publisher" output="screen" />
+
+  <group ns="slave">
+      <include file="$(find ur_gazebo)/launch/ur5.launch">
+        <arg name="init_pose" value="-z 0.205 -y 0.0 -x 0.35"/>
+        <arg name="robot_name" value="slave"/>
+      </include>
+
+      <include file="$(find ur5_new_moveit_config)/launch/move_group.launch">
+        <arg name="limited" default="$(arg limited)"/>
+        <arg name="debug" default="$(arg debug)" />
+      </include>
+
+      <include file="$(find ur_gazebo)/launch/ur5_gripper_controllers.launch" />
+      <remap if="$(arg sim)" from="follow_joint_trajectory" to="arm_controller/follow_joint_trajectory"/>
+
+      <node name="ur5_vision_slave" pkg="ur5_notebook" type="ur5_vision_slave.py" output="screen" />
+
+  </group>
+
+  <node pkg="ur5_notebook" type="fixed_tf_broadcaster.py" name="broadcaster_fixed" />
+  <node pkg="ur5_notebook" type="fixed_tf_broadcaster2.py" name="broadcaster_fixed_2" />
+
+  <group ns="master">
+
+      <include file="$(find ur_gazebo)/launch/ur5_r2.launch">
+        <arg name="init_pose" value="-z 0.205 -y 0.0 -x 0.35"/>
+        <arg name="robot_name" value="master"/>
+
+      </include>
+
+      <remap if="$(arg sim)" from="follow_joint_trajectory" to="arm_controller/follow_joint_trajectory"/>
+
+      <include file="$(find ur_gazebo)/launch/ur5_r2_gripper_controllers.launch" />
+
+      <include file="$(find ur5_r2_new_moveit_config)/launch/move_group.launch">
+        <arg name="limited" default="$(arg limited)"/>
+        <arg name="debug" default="$(arg debug)" />
+      </include>
+
+      <node name="ur5_vision_master" pkg="ur5_notebook" type="ur5_vision_master.py" output="screen" />
+
+  </group>
+  <!-- <node name="motion_planning_slave" pkg="ur5_notebook" type="motion_planning_slave.py" output="screen" />
+  <node name="motion_planning_master" pkg="ur5_notebook" type="motion_planning_master.py" output="screen" /> -->
+  <!-- <node name="gripper_command_slave" pkg="ur5_notebook" type="send_gripper_slave.py" output="screen" />
+  <node name="gripper_command_master" pkg="ur5_notebook" type="send_gripper_master.py" output="screen" /> -->
+
+</launch>

@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="red_box_path" type="str" value="$(find ur5_notebook)/urdf/red_box.urdf"/>
+  <!-- <arg name="robot_name"/> -->
+  <!-- <arg name="init_pose"/> -->
+  <arg name="limited" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="debug" default="false" />
+  <arg name="sim" default="true" />
+  
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <!-- spwan ur5 -->
+  <!-- send robot urdf to param server -->
+  <!-- <include file="$(find ur_description)/launch/ur5_upload.launch">
+    <arg name="limited" value="$(arg limited)"/>
+  </include> -->
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+
+  <include file="$(find ur_gazebo)/launch/controller_utils.launch"/>
+
+  
+
+ 
+
+  <!-- spawn the conveyor_belt in gazebo -->
+  <node name="spawn_conveyor_belt" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/conveyor_belt.urdf -urdf -model conveyor_belt" />
+  <!-- spawn the conveyor_belt in gazebo -->
+  <node name="bin" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/bin.urdf -urdf -model bin -y 0.8 -x -0.5 -z 0.05" />
+  <node name="blocks_spawner" pkg="ur5_notebook" type="blocks_spawner" output="screen" />
+  <node name="blocks_poses_publisher" pkg="ur5_notebook" type="blocks_poses_publisher" output="screen" />
+  
+  <!-- the red blocks spawner node -->
+ 
+
+  <!-- the cylinder poses publisher node -->
+ 
+
+  <!-- the cylinder poses publisher node -->
+
+
+  <group ns="robot1">
+    <param name="tf_prefix" value="robot1_tf" />
+    <arg name="robot_name" value="robot1"/>
+
+    <include file="$(find ur_description)/launch/ur5_upload.launch">
+      <arg name="limited" value="$(arg limited)"/>
+    </include>
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model $(arg robot_name) -z 0.2 -y 0.7" respawn="false" output="screen" />
+
+    <include file="$(find ur_gazebo)/launch/controller_utils.launch"/>
+
+  <!-- start this controller -->
+    <rosparam file="$(find ur_gazebo)/controller/arm_controller_ur5.yaml" command="load"/>
+    <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller" respawn="false" output="screen"/>
+
+
+
+  <!-- Remap follow_joint_trajectory -->
+    <remap if="$(arg sim)" from="follow_joint_trajectory" to="robot1/arm_controller/follow_joint_trajectory"/>
+    <include file="$(find ur5_moveit_config)/launch/move_group.launch">
+        <arg name="limited" default="$(arg limited)"/>
+        <arg name="debug" default="$(arg debug)" />
+    </include>
+
+  <!-- Launch moveit -->
+      <!-- <include file="$(find ur5_moveit_config)/launch/move_group.launch">
+        <arg name="limited" default="$(arg limited)"/>
+        <arg name="debug" default="$(arg debug)" />
+      </include> -->
+
+    <node name="ur5_vision" pkg="ur5_notebook" type="ur5_vision.py" output="screen" />
+    <node name="ur5_mp" pkg="ur5_notebook" type="ur5_mp.py" output="screen" />
+    <node name="ur5_gripper" pkg="ur5_notebook" type="ur5_gripper.py" output="screen"/>
+  </group>
+
+
+  <group ns="robot2">
+    <param name="tf_prefix" value="robot2_tf" />
+    <arg name="robot_name" value="robot2"/>
+
+    <include file="$(find ur_description)/launch/ur5_upload.launch">
+      <arg name="limited" value="$(arg limited)"/>
+    </include>
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model $(arg robot_name) -z 0.2 -y -0.9" respawn="false" output="screen" />
+
+    <include file="$(find ur_gazebo)/launch/controller_utils.launch"/>
+
+  <!-- start this controller -->
+    <rosparam file="$(find ur_gazebo)/controller/arm_controller_ur5.yaml" command="load"/>
+    <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller" respawn="false" output="screen"/>
+
+
+        <!-- Remap follow_joint_trajectory  -->
+    <remap if="$(arg sim)" from="follow_joint_trajectory" to="robot2/arm_controller/follow_joint_trajectory"/>
+    <include file="$(find ur5_moveit_config)/launch/move_group.launch">
+        <arg name="limited" default="$(arg limited)"/>
+        <arg name="debug" default="$(arg debug)" />
+    </include>
+
+      <!-- <include file="$(find ur5_moveit_config)/launch/move_group.launch">
+        <arg name="limited" default="$(arg limited)"/>
+        <arg name="debug" default="$(arg debug)" />
+      </include> -->
+
+    <node name="ur5_vision_copy" pkg="ur5_notebook" type="ur5_vision_copy.py" output="screen" />
+    <node name="ur5_mp_copy" pkg="ur5_notebook" type="ur5_mp_copy.py" output="screen" />
+    <node name="ur5_gripper_copy" pkg="ur5_notebook" type="ur5_gripper_copy.py" output="screen"/>
+  </group>
+
+</launch>
+  <!-- for ros control to be used with scara robot -->
+  <!--   <param name="/scara_robot_left/robot_description" textfile="$(find two_scara_collaboration)/urdf/scara_robot_left.urdf" />-->
+
+<!-- spawn the red_box in gazebo -->
+<!-- node name="spawn_red_box" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/red_box.urdf -urdf -model red_box"/ -->
+
+
+
