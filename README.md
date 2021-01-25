@@ -2,7 +2,7 @@
 <p align="center">
 <img src="https://github.com/murtazabasu/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task/blob/master/media/ur5_coord.gif" width="480">
 
-This repository shows the coordination between two UR5 robots in ROS and Gazebo where one is the master and the other is the slave. The project is inspired from the works of [__`GitHub: lihuang3/ur5_ROS-Gazebo`__](https://github.com/lihuang3/ur5_ROS-Gazebo.git). Both the master and the slave uses the Robotiq85 gripper for grasping and are attached with a camera sensor for detecting the objects. The master robot detects the object placed at the starting position using the camera and brings it close to the slave robot. The slave robot detects the object from the master's gripper and grasps it. 
+This repository shows the coordination between two UR5 robots in ROS and Gazebo where one is the master and the other is the slave. Both the master and the slave uses the Robotiq85 gripper for grasping and are attached with a camera sensor for detecting the objects. The master robot detects the object placed at the starting position using the camera and brings it close to the slave robot. The slave robot detects the object from the master's gripper and grasps it. 
 Finally the slave robot brings the object at the final position. The master and slave robot performs three functionalities:
 
 1. Object detection using the camera sensor ([`ur5_vision_master.py`](https://github.com/murtazabasu/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task/ur5_notebook/ur5_vision_master.py)) and ([`ur5_vision_slave.py`](https://github.com/murtazabasu/Coordinating-Two-UR5-Robots-for-a-Pick-and-Place-Task/ur5_notebook/ur5_vision_slave.py))
